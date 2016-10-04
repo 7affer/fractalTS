@@ -1,0 +1,11 @@
+{
+  "globalDependencies": {
+    "chai": "registry:dt/chai#3.4.0+20160601211834",
+    "chai-jquery": "registry:dt/chai-jquery#1.1.1+20160724063359",
+    "jquery": "registry:dt/jquery#1.10.0+20160908203239",
+    "jqueryui": "registry:dt/jqueryui#1.11.0+20160727153854",
+    "lodash": "registry:global/lodash#4.0.0+20160723033700",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
+    "sinon": "registry:dt/sinon#1.16.0+20160924120326"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/ec2a478b24299379d932783c8aacdc4a3700cb71/chai-jquery/chai-jquery.d.ts",
+    "raw": "registry:dt/chai-jquery#1.1.1+20160724063359",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/ec2a478b24299379d932783c8aacdc4a3700cb71/chai-jquery/chai-jquery.d.ts"
+  }
+}

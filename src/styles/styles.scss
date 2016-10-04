@@ -1,0 +1,177 @@
+$sidebarleftwidth: 300px;
+
+body {
+    background: #000;
+    color: #000;
+    overflow: hidden;
+}
+
+.title {
+    margin-top: 0;
+    text-align: center;
+}
+
+.fractals {
+    z-index: 20;
+
+    canvas {
+        cursor: pointer;
+        background: #000;
+        transition: all 300ms linear;
+        width: 266px;
+        height: 200px;
+    }
+
+    .fakecheck {
+        display: none;
+
+        & + .checklabel {
+            transition: all 300ms linear;
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            bottom: 0;
+            right: 0;
+            display: block;
+            z-index: 10;
+            margin: 0;
+            padding: 0;
+            
+            .overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            @keyframes loading1 {
+                0% {  background-color: rgba(255,255,255,0.9); transform: rotate(0deg) }
+                100% {    background-color: rgba(0,0,0,0.9); transform: rotate(360deg) }
+            }
+
+            &.loading:after {
+                content: "";
+                position: absolute;
+                display: block;
+                width: 80px;
+                height: 80px;
+                background: #fff;
+                right: 50%;
+                bottom: 50%;
+                -webkit-animation-name: loading1; /* Chrome, Safari, Opera */
+                -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+                -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+                -webkit-animation-direction: alternate-reverse;
+                animation-name: loading1;
+                animation-duration:1s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate-reverse;
+            }
+
+            &.loading:before {
+                content: "";
+                position: absolute;
+                display: block;
+                width: 80px;
+                height: 80px;
+                background: #fff;
+                right: 50%;
+                bottom: 50%;
+                -webkit-animation-name: loading1; /* Chrome, Safari, Opera */
+                -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+                -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+                -webkit-animation-direction: alternate-reverse;
+                animation-name: loading1;
+                animation-duration: 2s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate-reverse;
+            }
+
+            & > canvas {
+                width: 100%;
+                height: 100%;      
+            }
+        }
+
+        &:checked + .checklabel {        
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+
+            .overlay {
+                display: none;
+            }
+        }
+    }
+}
+
+.config {
+    background: #fff;
+    z-index: 30;
+    position: fixed;
+    width: $sidebarleftwidth;
+    left: -$sidebarleftwidth;
+    transition: all 0.2s ease-in-out;
+    height: 100%;
+
+    &.toggled {
+        left: 0;
+    }
+
+    .button-toggle {
+        padding: 10px;
+        position: relative;
+        left: $sidebarleftwidth;
+    }
+
+    .colors-section {
+        margin-top: 20px;
+    }
+
+    form {
+        margin: -30px 10px 0;
+    }
+}
+
+.bwslider {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    position: relative;
+    line-height: 0;
+    height: 30px;
+
+    .handle {
+        width: 0px;
+        height: 30px;
+        border-left: 1px solid #000;
+        display: inline-block;
+        position: absolute !important;
+
+        &:after {
+            content: "";
+            display: block;
+            bottom: -20px;
+            left: -7px;
+            position: absolute;
+            width: 14px;
+            height: 20px;
+            background: inherit;
+            opacity: 0.9;
+            cursor: pointer;
+            box-shadow: inset 0 0 1px 1px #000;
+        }
+
+        &.selected:after {
+            box-shadow: inset 0 0 2px 2px #000;
+        }
+    }
+}
+
+
+
+.form-group,
+.btn {
+    border-radius: 0;
+}

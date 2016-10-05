@@ -6,7 +6,8 @@
   "license": "MIT",
   "readme": "README.md",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "start": "webpack --config webpack.config.js && serve ./dist"
   },
   "author": "Bartłomiej Wilk",
   "devDependencies": {

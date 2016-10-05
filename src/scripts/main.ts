@@ -107,8 +107,8 @@ function initevents() {
 }
 
 function saveclick() {
-	let canvas = $('.fakecheck:checked + label canvas')[0]
-	var image = canvasm.toDataURL("image/png");
+	let canvas = <HTMLCanvasElement>$('.fakecheck:checked + label canvas')[0]
+	var image = canvas.toDataURL("image/png");
 	image = image.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
 	image = image.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
 

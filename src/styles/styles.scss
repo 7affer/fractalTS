@@ -115,15 +115,10 @@ body {
     left: -$sidebarleftwidth;
     transition: all 0.2s ease-in-out;
     height: 100%;
+    overflow: auto;
 
     &.toggled {
         left: 0;
-    }
-
-    .button-toggle {
-        padding: 10px;
-        position: relative;
-        left: $sidebarleftwidth;
     }
 
     .colors-section {
@@ -131,7 +126,19 @@ body {
     }
 
     form {
-        margin: -30px 10px 0;
+        margin: 20px 10px 0;
+    }
+}
+
+.button-toggle {
+    padding: 10px;
+    position: relative;
+    left: 0;
+    z-index: 30;
+    transition: all 0.2s ease-in-out;
+
+    &.toggled {
+        left: $sidebarleftwidth;
     }
 }
 

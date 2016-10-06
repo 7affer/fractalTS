@@ -24,12 +24,6 @@
 	<![endif]-->
 	<div>
 		<div class="config">
-			<div class="button-toggle">
-				<a class="btn btn-default" id="menu-toggle">Config</a>
-				<a class="btn btn-default" title="help" data-toggle="modal" data-target="#helpmodal"><span class="glyphicon glyphicon-question-sign"></span></a>
-				<a class="btn btn-default" download="fractal.png" title="save" id="save"><span class="glyphicon glyphicon-floppy-save"></span></a>
-			</div>
-
 			<form id="mainform">
 				<div class="form-group">
 					<h1 class="title">FractalTS</h1>
@@ -76,6 +70,11 @@
 					<div class="colorpicker"></div>
 				</div>
 			</form>
+		</div>
+		<div class="button-toggle">
+			<a class="btn btn-default" id="menu-toggle">Config</a>
+			<a class="btn btn-default" title="help" data-toggle="modal" data-target="#helpmodal"><span class="glyphicon glyphicon-question-sign"></span></a>
+			<a class="btn btn-default" download="fractal.png" title="save" id="save"><span class="glyphicon glyphicon-floppy-save"></span></a>
 		</div>
 		<div class="fractals">
 			<input type="radio" id="btnControl1" name="fakecheck" class="fakecheck" checked />
@@ -134,7 +133,8 @@
 	<script>
 		$("#menu-toggle").click(function(e) {
 			e.preventDefault();
-			$(".config").toggleClass("toggled");
+			$('.config').toggleClass("toggled");
+			$('.button-toggle').toggleClass("toggled");
 		});
     </script>
 </body>

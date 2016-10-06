@@ -70,32 +70,43 @@ export class FractalBuilder {
 					break
 				case 'mousewheel':
 				case 'DOMMouseScroll':
-				case 'gestureend':
 					if (
 						e.type == 'DOMMouseScroll' && wevent.detail > 0 ||
 						e.type == 'mousewheel' && wevent.deltaY > 0
 					) {
 						// zoom in
 						let coords = Utils.getcoords(mevent, instance.canvas, instance.pixelratio, instance.center)
-						instance.center = coords;
-						instance.pixelratio *= 0.5;
+						instance.zoomin(coords)
 					} else {
-						// zoom out
-						if (instance.pixelratio * 2 <= 0.008) instance.pixelratio *= 2
+						instance.zoomout()
 					}
-					instance.redraw(true)
 					wevent.preventDefault()
 					break
 				case 'mouseup':
 					let upcoords = Utils.getclickposition(instance.canvas, mevent)
-					if (instance.dragcoords != null) {
-						let change = { x: instance.dragcoords.x - upcoords.x, y: instance.dragcoords.y - upcoords.y }
-						instance.center.x += change.x * instance.pixelratio
-						instance.center.y -= change.y * instance.pixelratio
-						instance.redraw(true)
-					}
+					instance.drag(upcoords)
 					break
 			}
+		}
+	}
+
+	protected zoomin(coords: Point) {
+		this.center = coords;
+		this.pixelratio *= 0.5;
+		this.redraw(true)
+	}
+
+	protected zoomout() {
+		if (this.pixelratio * 2 <= 0.008) this.pixelratio *= 2
+		this.redraw(true)
+	}
+
+	protected drag(coords: Point) {
+		if (this.dragcoords != null) {
+			let change = { x: this.dragcoords.x - coords.x, y: this.dragcoords.y - coords.y }
+			this.center.x += change.x * this.pixelratio
+			this.center.y -= change.y * this.pixelratio
+			this.redraw(true)
 		}
 	}
 

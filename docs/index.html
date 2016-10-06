@@ -73,8 +73,8 @@
 		</div>
 		<div class="button-toggle">
 			<a class="btn btn-default" id="menu-toggle">Config</a>
-			<a class="btn btn-default" title="help" data-toggle="modal" data-target="#helpmodal"><span class="glyphicon glyphicon-question-sign"></span></a>
-			<a class="btn btn-default" download="fractal.png" title="save" id="save"><span class="glyphicon glyphicon-floppy-save"></span></a>
+			<a class="btn btn-default" title="About" data-toggle="modal" data-target="#helpmodal"><span class="glyphicon glyphicon-question-sign"></span></a>
+			<a class="btn btn-default" download="fractal.png" title="Save" id="save"><span class="glyphicon glyphicon-floppy-save"></span></a>
 		</div>
 		<div class="fractals">
 			<input type="radio" id="btnControl1" name="fakecheck" class="fakecheck" checked />
@@ -95,26 +95,27 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">HELP</h4>
+					<h4 class="modal-title" id="myModalLabel">About</h4>
 				</div>
 				<div class="modal-body">
 					<p><span class="label label-info">Mouse click</span> - render coresponding julia set</p>
 					<p><span class="label label-info">Mouse scroll</span> - zoom</p>
 					<p><span class="label label-info">Mouse drag</span> - move fractal</p>
 					<p>
-						<i>
-							Used technologies:	
-							<a href="https://www.typescriptlang.org">Typescript</a>,
-							<a href="http://sass-lang.com/">Saas</a>,
-							<a href="https://jquery.com/">jQuery</a>,
-							<a href="https://github.com/claviska/jquery-minicolors">jQuery-minicolors</a>,
-							<a href="https://jqueryui.com/">jQuery UI</a>,
-							<a href="http://getbootstrap.com/">Bootstrap</a>,
-							<a href="https://lodash.com/">Lodash</a>
-						</i>
+						<br /> Used technologies:
+						<a href="https://www.typescriptlang.org">Typescript</a>,
+						<a href="http://sass-lang.com/">Saas</a>,
+						<a href="https://jquery.com/">jQuery</a>,
+						<a href="https://github.com/claviska/jquery-minicolors">jQuery-minicolors</a>,
+						<a href="https://jqueryui.com/">jQuery UI</a>,
+						<a href="http://getbootstrap.com/">Bootstrap</a>,
+						<a href="https://lodash.com/">Lodash</a>
 					</p>
 					<p>
-						Project page: <a href="https://github.com/7affer/fractalTS">https://github.com/7affer/fractalTS</a>
+						<br /> Project page: <a href="https://github.com/7affer/fractalTS">https://github.com/7affer/fractalTS</a>
+					</p>
+					<p>
+						Author - Bartłomiej Wilk
 					</p>
 				</div>
 				<div class="modal-footer">
@@ -137,6 +138,15 @@
 			$('.button-toggle').toggleClass("toggled");
 		});
     </script>
+	<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-85217625-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
 </body>
 
 </html>

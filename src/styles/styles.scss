@@ -47,11 +47,15 @@ body {
             }
 
             @keyframes loading1 {
-                0% {  background-color: rgba(255,255,255,0.9); transform: rotate(0deg) }
-                100% {    background-color: rgba(0,0,0,0.9); transform: rotate(360deg) }
+                0% {  background-color: rgba(255,255,255,0.5); transform: rotate(0deg) }
+                25% {    background-color: rgba(255,0,0,0.5); transform: rotate(90deg) }
+                50% {    background-color: rgba(0,255,0,0.5); transform: rotate(180deg) }
+                75% {    background-color: rgba(0,0,255,0.5); transform: rotate(270deg) }
+                100% {    background-color: rgba(255,255,255,0.5); transform: rotate(360deg) }
             }
 
-            &.loading:after {
+            &.loading:after,
+            &.loading:before {
                 content: "";
                 position: absolute;
                 display: block;
@@ -68,25 +72,11 @@ body {
                 animation-duration:1s;
                 animation-iteration-count: infinite;
                 animation-direction: alternate-reverse;
+                animation-timing-function: linear;
             }
 
             &.loading:before {
-                content: "";
-                position: absolute;
-                display: block;
-                width: 80px;
-                height: 80px;
-                background: #fff;
-                right: 50%;
-                bottom: 50%;
-                -webkit-animation-name: loading1; /* Chrome, Safari, Opera */
-                -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
-                -webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
-                -webkit-animation-direction: alternate-reverse;
-                animation-name: loading1;
                 animation-duration: 2s;
-                animation-iteration-count: infinite;
-                animation-direction: alternate-reverse;
             }
 
             & > canvas {

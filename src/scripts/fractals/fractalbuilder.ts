@@ -54,11 +54,13 @@ export class FractalBuilder {
 		instance.canvas.addEventListener("mousewheel", instance, false)
 		instance.canvas.addEventListener("DOMMouseScroll", instance, false)
 		instance.canvas.addEventListener("mouseup", instance, false)
+		instance.canvas.addEventListener("gestureend", instance, false)
 	}
 
 	handleEvent = function (e: Event) {
 		let mevent = <MouseEvent>e
 		let wevent = <WheelEvent>e
+		let gevent = <MSGestureEvent>e
 		let instance = <FractalBuilder>this
 
 		if (instance.ready) {
@@ -68,6 +70,7 @@ export class FractalBuilder {
 					break
 				case 'mousewheel':
 				case 'DOMMouseScroll':
+				case 'gestureend':
 					if (
 						e.type == 'DOMMouseScroll' && wevent.detail > 0 ||
 						e.type == 'mousewheel' && wevent.deltaY > 0
@@ -75,7 +78,7 @@ export class FractalBuilder {
 						// zoom in
 						let coords = Utils.getcoords(mevent, instance.canvas, instance.pixelratio, instance.center)
 						instance.center = coords;
-						instance.pixelratio *= 0.5
+						instance.pixelratio *= 0.5;
 					} else {
 						// zoom out
 						if (instance.pixelratio * 2 <= 0.008) instance.pixelratio *= 2

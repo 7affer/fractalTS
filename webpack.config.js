@@ -32,8 +32,8 @@ module.exports = {
 		new ExtractTextPlugin("styles/styles.css"),
 		new CopyWebpackPlugin([
 			{
-				from: 'node_modules/jquery/dist',
-				to: 'assets/jquery'
+				from: 'node_modules/jquery/dist/jquery.min.js',
+				to: 'assets/jquery/jquery.min.js'
 			},
 			{
 				from: 'src/resources/jquery-ui-1.12.1',
@@ -48,8 +48,12 @@ module.exports = {
 				to: 'assets/lodash/lodash.min.js'
 			},
 			{
-				from: 'node_modules/jquery-minicolors',
-				to: 'assets/jquery-minicolors'
+				from: 'node_modules/jquery-minicolors/jquery.minicolors.min.js',
+				to: 'assets/jquery-minicolors/jquery.minicolors.min.js'
+			},
+			{
+				from: 'node_modules/jquery-minicolors/jquery.minicolors.css',
+				to: 'assets/jquery-minicolors/jquery.minicolors.css'
 			},
 			{
 				from: 'src/index.html'

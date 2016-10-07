@@ -74,11 +74,10 @@ export class FractalBuilder {
 						e.type == 'DOMMouseScroll' && wevent.detail > 0 ||
 						e.type == 'mousewheel' && wevent.deltaY > 0
 					) {
-						// zoom in
+						instance.zoomout()
+					} else {
 						let coords = Utils.getcoords(mevent, instance.canvas, instance.pixelratio, instance.center)
 						instance.zoomin(coords)
-					} else {
-						instance.zoomout()
 					}
 					wevent.preventDefault()
 					break

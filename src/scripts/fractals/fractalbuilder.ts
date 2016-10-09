@@ -23,6 +23,11 @@ export class FractalBuilder {
 	public beforeevent: () => void
 	public afterevent: () => void
 
+	public onzoomin: () => void
+	public onzoomout: () => void
+	public onclick: () => void
+	public ondrag: () => void
+
 	public redcolorchanel: Uint16Array
 	public greencolorchanel: Uint16Array
 	public bluecolorchanel: Uint16Array
@@ -96,8 +101,10 @@ export class FractalBuilder {
 	}
 
 	protected zoomout() {
-		if (this.pixelratio * 2 <= 0.008) this.pixelratio *= 2
-		this.redraw(true)
+		if (this.pixelratio * 2 <= 0.008) {
+			this.pixelratio *= 2
+			this.redraw(true)
+		}
 	}
 
 	protected drag(coords: Point) {

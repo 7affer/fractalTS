@@ -1,4 +1,7 @@
 $sidebarleftwidth: 300px;
+$zindexfractal: 1;
+$zindexfractalsub: 2;
+$zindexconfig: 3;
 
 body {
     background: #000;
@@ -12,7 +15,7 @@ body {
 }
 
 .fractals {
-    z-index: 20;
+    z-index: $zindexfractal;
 
     canvas {
         cursor: pointer;
@@ -33,7 +36,7 @@ body {
             bottom: 0;
             right: 0;
             display: block;
-            z-index: 10;
+            z-index: $zindexfractalsub;
             margin: 0;
             padding: 0;
             
@@ -88,7 +91,7 @@ body {
         &:checked + .checklabel {        
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: $zindexfractal;
 
             .overlay {
                 display: none;
@@ -99,7 +102,7 @@ body {
 
 .config {
     background: #fff;
-    z-index: 30;
+    z-index: $zindexconfig;
     position: fixed;
     width: $sidebarleftwidth;
     left: -$sidebarleftwidth;
@@ -124,7 +127,7 @@ body {
     padding: 10px;
     position: relative;
     left: 0;
-    z-index: 30;
+    z-index: $zindexconfig;
     transition: all 0.2s ease-in-out;
 
     &.toggled {

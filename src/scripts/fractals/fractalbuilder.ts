@@ -110,7 +110,7 @@ export class FractalBuilder {
 	protected drag(coords: Point) {
 		if (this.dragcoords != null) {
 			let change = { x: this.dragcoords.x - coords.x, y: this.dragcoords.y - coords.y }
-			if (change.x > 3 && change.y > 3) {
+			if (Math.abs(change.x) > 3 && Math.abs(change.y) > 3) {
 				this.center.x += change.x * this.pixelratio
 				this.center.y -= change.y * this.pixelratio
 				this.redraw(true)

@@ -23,6 +23,10 @@ export class FractalBuilder {
 	public beforeevent: () => void
 	public afterevent: () => void
 
+	public onzoomin: () => void
+	public onzoomout: () => void
+	public ondrag: () => void
+
 	public redcolorchanel: Uint16Array
 	public greencolorchanel: Uint16Array
 	public bluecolorchanel: Uint16Array
@@ -60,7 +64,6 @@ export class FractalBuilder {
 	handleEvent = function (e: Event) {
 		let mevent = <MouseEvent>e
 		let wevent = <WheelEvent>e
-		let gevent = <MSGestureEvent>e
 		let instance = <FractalBuilder>this
 
 		if (instance.ready) {
@@ -93,11 +96,13 @@ export class FractalBuilder {
 		this.center = coords;
 		this.pixelratio *= 0.5;
 		this.redraw(true)
+		this.onzoomin()
 	}
 
 	protected zoomout() {
 		if (this.pixelratio * 2 <= 0.008) this.pixelratio *= 2
 		this.redraw(true)
+		this.onzoomout()
 	}
 
 	protected drag(coords: Point) {
@@ -106,6 +111,7 @@ export class FractalBuilder {
 			this.center.x += change.x * this.pixelratio
 			this.center.y -= change.y * this.pixelratio
 			this.redraw(true)
+			this.ondrag()
 		}
 	}
 

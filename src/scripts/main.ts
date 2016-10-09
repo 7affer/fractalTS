@@ -44,6 +44,11 @@ function init() {
 		}
 	});
 
+	$('.tutorial-message')
+		.hide()
+		.tooltip({ trigger: "manual" })
+		.tooltip('show');
+
 	initevents()
 	initfractals(values)
 }

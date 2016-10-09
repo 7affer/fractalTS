@@ -4,23 +4,17 @@ import {Color} from "./color";
 import { FractalBuilder } from "./fractals/fractalbuilder";
 import { JuliaBuilder } from "./fractals/juliabuilder";
 import { Point } from "./fractals/point";
+import { Tutorial} from "./tutorial"
 
 const
 	canvasm = <HTMLCanvasElement>document.getElementById("canvasm"),
-	canvasj = <HTMLCanvasElement>document.getElementById("canvasj"),
-	inputs = <HTMLInputElement>document.getElementById("in_steps"),
-	inputss = <NodeListOf<Element>>document.getElementsByName("supersampling"),
-	inputtype = <NodeListOf<Element>>document.getElementsByName("type"),
-	reset = <HTMLButtonElement>document.getElementById("reset"),
-	form = <HTMLFormElement>document.getElementById("mainform"),
-	addcolors = <HTMLButtonElement>document.getElementById("addcolor"),
-	deletecolors = <HTMLButtonElement>document.getElementById("deletecolor"),
-	save = <HTMLButtonElement>document.getElementById("save")
+	canvasj = <HTMLCanvasElement>document.getElementById("canvasj")
 var
 	mandelbrot: FractalBuilder,
 	julia: JuliaBuilder,
 	windowwidth = $(window).width(),
-	windowheight = $(window).height()
+	windowheight = $(window).height(),
+	tutorial = new Tutorial('.tutorial-message')
 
 function init() {
 
@@ -43,6 +37,8 @@ function init() {
 			repaintgradient((<any>$('.gradslider')).grad().getgradient())
 		}
 	});
+
+	tutorial.setlevel(1)
 
 	initevents()
 	initfractals(values)
@@ -78,9 +74,28 @@ function initfractals(gradient: Array<GradData>) {
 
 	mandelbrot.redraw()
 	julia.redraw()
+
+	mandelbrot.onzoomin = () => { tutorial.setlevel(2) }
+	mandelbrot.onzoomout = () => { tutorial.setlevel(3) }
+	mandelbrot.ondrag = () => { tutorial.setlevel(4) }
+
+	julia.onzoomin = () => { tutorial.setlevel(2) }
+	julia.onzoomout = () => { tutorial.setlevel(3) }
+	julia.ondrag = () => { tutorial.setlevel(4) }
 }
 
 function initevents() {
+	let inputs = <HTMLInputElement>document.getElementById("in_steps")
+	let inputss = <NodeListOf<Element>>document.getElementsByName("supersampling")
+	let inputtype = <NodeListOf<Element>>document.getElementsByName("type")
+	let reset = <HTMLButtonElement>document.getElementById("reset")
+	let form = <HTMLFormElement>document.getElementById("mainform")
+	let addcolors = <HTMLButtonElement>document.getElementById("addcolor")
+	let deletecolors = <HTMLButtonElement>document.getElementById("deletecolor")
+	let save = <HTMLButtonElement>document.getElementById("save")
+	let fractalradio = <NodeListOf<Element>>document.getElementsByName("fakecheck")
+	let configbutton = <HTMLElement>document.getElementById("menu-toggle")
+
 	form.addEventListener("submit", onsubmit, false)
 	reset.addEventListener("click", onreset, false)
 	canvasm.addEventListener("click", mouseclick, false)
@@ -88,13 +103,22 @@ function initevents() {
 	addcolors.addEventListener("click", addcolor, false)
 	deletecolors.addEventListener("click", deletecolor, false)
 	save.addEventListener("click", saveclick, false)
+	configbutton.addEventListener("click", function () { tutorial.setlevel(7) }, false)
 
 	for (let i = 0; i < inputss.length; i++) {
 		inputss[i].addEventListener("change", onsubmit, false);
 	}
 
 	for (let i = 0; i < inputtype.length; i++) {
-		inputtype[i].addEventListener("change", onsubmit, false);
+		inputtype[i].addEventListener("change", function () {
+			julia.center = mandelbrot.center = new Point(0, 0);
+			julia.pixelratio = mandelbrot.pixelratio = 0.008;
+			onsubmit(null);
+		}, false);
+	}
+
+	for (let i = 0; i < fractalradio.length; i++) {
+		fractalradio[i].addEventListener("change", function () { tutorial.setlevel(6) }, false);
 	}
 
 	setInterval(function () {
@@ -141,6 +165,10 @@ function onresizewindow() {
 }
 
 function onsubmit(e: Event) {
+	let inputs = <HTMLInputElement>document.getElementById("in_steps")
+	let inputss = <NodeListOf<Element>>document.getElementsByName("supersampling")
+	let inputtype = <NodeListOf<Element>>document.getElementsByName("type")
+
 	mandelbrot.steps = parseInt(inputs.value, 10)
 	julia.steps = parseInt(inputs.value, 10)
 	for (let i = 0; i < inputss.length; i++) {
@@ -169,6 +197,7 @@ function mouseclick(e: MouseEvent) {
 	var juliapoint = Utils.getcoords(e, canvasm, mandelbrot.pixelratio, mandelbrot.center);
 	julia.jconstant = juliapoint;
 	julia.redraw()
+	tutorial.setlevel(5)
 }
 
 function onreset(e: MouseEvent) {

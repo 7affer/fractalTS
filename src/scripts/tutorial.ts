@@ -26,13 +26,10 @@ export class Tutorial {
     }
 
     private getlevel = function () {
-        let level = localStorage.getItem(this.storagekey)
-        if (level == null) {
-            level = 0
-        }
-        if (isNaN(parseInt(level, 10))) {
+        let level = parseInt(localStorage.getItem(this.storagekey), 10)
+        if (isNaN(level)) {
             return 0
         }
-        return parseInt(level, 10);
+        return level;
     }
 }

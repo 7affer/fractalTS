@@ -85,7 +85,6 @@ function initfractals(gradient: Array<GradData>) {
 }
 
 function initevents() {
-	let inputs = <HTMLInputElement>document.getElementById("in_steps")
 	let inputss = <NodeListOf<Element>>document.getElementsByName("supersampling")
 	let inputtype = <NodeListOf<Element>>document.getElementsByName("type")
 	let reset = <HTMLButtonElement>document.getElementById("reset")

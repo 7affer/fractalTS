@@ -26,6 +26,7 @@ export class FractalBuilder {
 	public onzoomin: () => void
 	public onzoomout: () => void
 	public ondrag: () => void
+	public onclick: (e: MouseEvent) => void
 
 	public redcolorchanel: Uint16Array
 	public greencolorchanel: Uint16Array
@@ -58,7 +59,6 @@ export class FractalBuilder {
 		instance.canvas.addEventListener("mousewheel", instance, false)
 		instance.canvas.addEventListener("DOMMouseScroll", instance, false)
 		instance.canvas.addEventListener("mouseup", instance, false)
-		instance.canvas.addEventListener("gestureend", instance, false)
 	}
 
 	handleEvent = function (e: Event) {
@@ -71,12 +71,17 @@ export class FractalBuilder {
 				case 'mousedown':
 					instance.dragcoords = Utils.getclickposition(instance.canvas, mevent)
 					break
+				case 'mouseup':
+					let upcoords = Utils.getclickposition(instance.canvas, mevent)
+					let change = { x: instance.dragcoords.x - upcoords.x, y: instance.dragcoords.y - upcoords.y }
+					if (Math.abs(change.x) > 3 || Math.abs(change.y)) {
+						instance.drag(change)
+					} else {
+						instance.onclick(mevent)
+					}
+					break
 				case 'mousewheel':
-				case 'DOMMouseScroll':
-					if (
-						e.type == 'DOMMouseScroll' && wevent.detail > 0 ||
-						e.type == 'mousewheel' && wevent.deltaY > 0
-					) {
+					if (wevent.deltaY > 0) {
 						instance.zoomout()
 					} else {
 						let coords = Utils.getcoords(mevent, instance.canvas, instance.pixelratio, instance.center)
@@ -84,9 +89,14 @@ export class FractalBuilder {
 					}
 					wevent.preventDefault()
 					break
-				case 'mouseup':
-					let upcoords = Utils.getclickposition(instance.canvas, mevent)
-					instance.drag(upcoords)
+				case 'DOMMouseScroll':
+					if (wevent.detail > 0) {
+						instance.zoomout()
+					} else {
+						let coords = Utils.getcoords(mevent, instance.canvas, instance.pixelratio, instance.center)
+						instance.zoomin(coords)
+					}
+					wevent.preventDefault()
 					break
 			}
 		}
@@ -107,16 +117,11 @@ export class FractalBuilder {
 		}
 	}
 
-	protected drag(coords: Point) {
-		if (this.dragcoords != null) {
-			let change = { x: this.dragcoords.x - coords.x, y: this.dragcoords.y - coords.y }
-			if (Math.abs(change.x) > 3 && Math.abs(change.y) > 3) {
-				this.center.x += change.x * this.pixelratio
-				this.center.y -= change.y * this.pixelratio
-				this.redraw(true)
-				this.ondrag()
-			}
-		}
+	protected drag(change: Point) {
+		this.center.x += change.x * this.pixelratio
+		this.center.y -= change.y * this.pixelratio
+		this.redraw(true)
+		this.ondrag()
 	}
 
 	protected generate() {

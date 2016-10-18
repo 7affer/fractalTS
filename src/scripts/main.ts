@@ -77,11 +77,19 @@ function initfractals(gradient: Array<GradData>) {
 
 	mandelbrot.onzoomin = () => { tutorial.setlevel(2) }
 	mandelbrot.onzoomout = () => { tutorial.setlevel(3) }
-	mandelbrot.ondrag = () => { tutorial.setlevel(5) }
+	mandelbrot.ondrag = () => { tutorial.setlevel(4) }
+	mandelbrot.onclick = mouseclick
 
 	julia.onzoomin = () => { tutorial.setlevel(2) }
 	julia.onzoomout = () => { tutorial.setlevel(3) }
-	julia.ondrag = () => { tutorial.setlevel(5) }
+	julia.ondrag = () => { tutorial.setlevel(4) }
+}
+
+function mouseclick(e: MouseEvent) {
+	var juliapoint = Utils.getcoords(e, canvasm, mandelbrot.pixelratio, mandelbrot.center);
+	julia.jconstant = juliapoint;
+	julia.redraw()
+	tutorial.setlevel(5)
 }
 
 function initevents() {
@@ -97,7 +105,6 @@ function initevents() {
 
 	form.addEventListener("submit", onsubmit, false)
 	reset.addEventListener("click", onreset, false)
-	canvasm.addEventListener("click", mouseclick, false)
 
 	addcolors.addEventListener("click", addcolor, false)
 	deletecolors.addEventListener("click", deletecolor, false)
@@ -190,13 +197,6 @@ function onsubmit(e: Event) {
 	mandelbrot.redraw()
 	julia.redraw()
 	e.preventDefault();
-}
-
-function mouseclick(e: MouseEvent) {
-	var juliapoint = Utils.getcoords(e, canvasm, mandelbrot.pixelratio, mandelbrot.center);
-	julia.jconstant = juliapoint;
-	julia.redraw()
-	tutorial.setlevel(4)
 }
 
 function onreset(e: MouseEvent) {

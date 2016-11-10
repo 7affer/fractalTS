@@ -17,6 +17,7 @@
 	<link href="assets/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
 	<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="assets/jquery-minicolors/jquery.minicolors.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="styles/styles.css" />
 </head>
 
@@ -74,24 +75,28 @@
 			</form>
 		</div>
 		<div class="button-toggle">
-			<a class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-cog"></span></a>
+			<a class="btn btn-default" title="Config" id="menu-toggle"><span class="glyphicon glyphicon-cog"></span></a>
 			<a class="btn btn-default" title="About" data-toggle="modal" data-target="#helpmodal"><span class="glyphicon glyphicon-question-sign"></span></a>
 			<a class="btn btn-default" download="fractal.png" title="Save" id="save"><span class="glyphicon glyphicon-floppy-save"></span></a>
 		</div>
+		<div class="button-toggle right">
+			<a class="btn btn-default" title="Zoom in" id="zoomin"><span class="glyphicon glyphicon-plus"></span></a>
+			<a class="btn btn-default" title="Zoom out" id="zoomout"><span class="glyphicon glyphicon-minus"></span></a>
+		</div>
 		<div class="fractals">
-			<input type="radio" id="btnControl1" name="fakecheck" class="fakecheck" checked />
-			<label class="btn checklabel label-mandel" for="btnControl1">
+			<input type="radio" id="radiomandel" name="fakecheck" class="fakecheck" checked />
+			<label class="btn checklabel label-mandel" for="radiomandel">
 				<div class="overlay"></div>
 				<canvas id="canvasm"></canvas>
 			</label>
-			<input type="radio" id="btnControl2" name="fakecheck" class="fakecheck" />
-			<label class="btn checklabel label-julia" for="btnControl2">
+			<input type="radio" id="radiojulia" name="fakecheck" class="fakecheck" />
+			<label class="btn checklabel label-julia" for="radiojulia">
 				<div class="overlay"></div>
 				<canvas id="canvasj"></canvas>
 			</label>
 
-			<span class="tutorial-message message1" title="Scroll up to zoom in"><span class="glyphicon glyphicon-question-sign"></span></span>
-			<span class="tutorial-message message2" title="Scroll down to zoom out"><span class="glyphicon glyphicon-question-sign"></span></span>
+			<span class="tutorial-message message1" title="Scroll up or click plus button to zoom in"><span class="glyphicon glyphicon-question-sign"></span></span>
+			<span class="tutorial-message message2" title="Scroll down or click minus button to zoom out"><span class="glyphicon glyphicon-question-sign"></span></span>
 			<span class="tutorial-message message3" title="Drag to move"><span class="glyphicon glyphicon-question-sign"></span></span>
 			<span class="tutorial-message message4" title="Click inside fractal to create julia set"><span class="glyphicon glyphicon-question-sign"></span></span>			
 			<span class="tutorial-message message5" title="Click to maximalize julia set"><span class="glyphicon glyphicon-question-sign"></span></span>
@@ -156,7 +161,6 @@
     ga('create', 'UA-85217625-1', 'auto');
     ga('send', 'pageview');
     </script>
-
 </body>
 
 </html>

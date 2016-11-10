@@ -8,7 +8,8 @@ import { Tutorial} from "./tutorial"
 
 const
 	canvasm = <HTMLCanvasElement>document.getElementById("canvasm"),
-	canvasj = <HTMLCanvasElement>document.getElementById("canvasj")
+	canvasj = <HTMLCanvasElement>document.getElementById("canvasj"),
+	initialpixelratio = 0.008
 var
 	mandelbrot: FractalBuilder,
 	julia: JuliaBuilder,
@@ -86,8 +87,10 @@ function initfractals(gradient: Array<GradData>) {
 }
 
 function mouseclick(e: MouseEvent) {
-	var juliapoint = Utils.getcoords(e, canvasm, mandelbrot.pixelratio, mandelbrot.center);
-	julia.jconstant = juliapoint;
+	var juliapoint = Utils.getcoords(e, canvasm, mandelbrot.pixelratio, mandelbrot.center)
+	julia.jconstant = juliapoint
+	julia.center = new Point(0,0)
+	julia.pixelratio = initialpixelratio
 	julia.redraw()
 	tutorial.setlevel(5)
 }
@@ -102,6 +105,8 @@ function initevents() {
 	let save = <HTMLButtonElement>document.getElementById("save")
 	let fractalradio = <NodeListOf<Element>>document.getElementsByName("fakecheck")
 	let configbutton = <HTMLElement>document.getElementById("menu-toggle")
+	let zoomin = <HTMLElement>document.getElementById('zoomin')
+	let zoomout = <HTMLElement>document.getElementById('zoomout')
 
 	form.addEventListener("submit", onsubmit, false)
 	reset.addEventListener("click", onreset, false)
@@ -110,6 +115,8 @@ function initevents() {
 	deletecolors.addEventListener("click", deletecolor, false)
 	save.addEventListener("click", saveclick, false)
 	configbutton.addEventListener("click", function () { tutorial.setlevel(7) }, false)
+	zoomin.addEventListener("click", zoomincurrent, false)
+	zoomout.addEventListener("click", zoomoutcurrent, false)
 
 	for (let i = 0; i < inputss.length; i++) {
 		inputss[i].addEventListener("change", onsubmit, false);
@@ -118,7 +125,7 @@ function initevents() {
 	for (let i = 0; i < inputtype.length; i++) {
 		inputtype[i].addEventListener("change", function () {
 			julia.center = mandelbrot.center = new Point(0, 0);
-			julia.pixelratio = mandelbrot.pixelratio = 0.008;
+			julia.pixelratio = mandelbrot.pixelratio = initialpixelratio;
 			onsubmit(null);
 		}, false);
 	}
@@ -134,6 +141,18 @@ function initevents() {
 			onresizewindow()
 		}
 	}, 300)
+}
+
+function zoomincurrent() {
+	let mandel = <HTMLInputElement>document.getElementById('radiomandel')
+	if(mandel.checked) mandelbrot.zoomin(null)
+	else julia.zoomin(null)
+}
+
+function zoomoutcurrent() {
+	let mandel = <HTMLInputElement>document.getElementById('radiomandel')
+	if(mandel.checked) mandelbrot.zoomout()
+	else julia.zoomout()
 }
 
 function saveclick() {
@@ -201,7 +220,7 @@ function onsubmit(e: Event) {
 
 function onreset(e: MouseEvent) {
 	julia.center = mandelbrot.center = new Point(0, 0);
-	julia.pixelratio = mandelbrot.pixelratio = 0.008;
+	julia.pixelratio = mandelbrot.pixelratio = initialpixelratio;
 	mandelbrot.redraw()
 	julia.redraw()
 }

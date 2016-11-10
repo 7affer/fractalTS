@@ -226,7 +226,27 @@ body {
              left: $sidebarleftwidthmobile;           
         }
     }
-}
+
+    &.right {
+        float: right;
+        width: auto;
+
+        @media #{$mediamobile} {
+            width: 60px;
+        }
+    }
+
+    &.toggled.right {
+        left: 0px;
+        position: relative;
+    }
+
+    @media #{$mediamobile} {
+        &.toggled.right {
+            display: none;
+        }
+    }
+ }
 
 .bwslider {
     margin-top: 5px;

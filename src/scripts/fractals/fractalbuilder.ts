@@ -102,14 +102,16 @@ export class FractalBuilder {
 		}
 	}
 
-	protected zoomin(coords: Point) {
-		this.center = coords;
+	public zoomin(coords: Point) {
+		if(coords != null) {
+			this.center = coords;
+		}
 		this.pixelratio *= 0.5;
 		this.redraw(true)
 		this.onzoomin()
 	}
 
-	protected zoomout() {
+	public zoomout() {
 		if (this.pixelratio * 2 <= 0.008) {
 			this.pixelratio *= 2
 			this.redraw(true)

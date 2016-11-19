@@ -57,6 +57,7 @@ export class FractalBuilder {
 		instance.canvas = canvas;
 		let mc = new Hammer(canvas);
 		mc.get('pan').set({ direction: Hammer.DIRECTION_ALL })
+		mc.get('pinch').set({ enable: true })
 		mc.on("pinchend tap panend", function (e) { instance.hammerevents(e, instance) })
 
 		instance.canvas.addEventListener("mousewheel", instance, false)
@@ -67,9 +68,9 @@ export class FractalBuilder {
 		console.log(`type: ${e.type}, point: ${e.center.x} ${e.center.y}, delta: ${e.deltaX} ${e.deltaY}`)
 		let center = Utils.getcoordsfrompoint(e.center, instance.canvas, instance.pixelratio, instance.center)
 		switch (e.type) {
-			case 'tap': instance.onclick(center); break;
-			case 'pinchend': e.scale > 1 ? instance.zoomin(center) : instance.zoomout(); break;
-			case 'panend': instance.drag(new Point(-e.deltaX * instance.pixelratio, -e.deltaY * instance.pixelratio)); break;
+			case 'tap': instance.onclick(center); break
+			case 'pinchend': e.scale > 1 ? instance.zoomin(center) : instance.zoomout(); break
+			case 'panend': instance.drag(new Point(-e.deltaX * instance.pixelratio, -e.deltaY * instance.pixelratio)); break
 		}
 	}
 
@@ -96,10 +97,8 @@ export class FractalBuilder {
 	}
 
 	public zoomin(coords: Point) {
-		if (coords != null) {
-			this.center = coords;
-		}
-		this.pixelratio *= 0.5;
+		if (coords != null) this.center = coords
+		this.pixelratio *= 0.5
 		this.redraw(true)
 		this.onzoomin()
 	}

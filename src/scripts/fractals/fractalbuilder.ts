@@ -26,7 +26,7 @@ export class FractalBuilder {
 	public onzoomin: () => void
 	public onzoomout: () => void
 	public ondrag: () => void
-	public onclick: (e: MouseEvent) => void
+	public onclick: (e: Point) => void
 
 	public redcolorchanel: Uint16Array
 	public greencolorchanel: Uint16Array
@@ -55,47 +55,40 @@ export class FractalBuilder {
 	public setcanvas(canvas: HTMLCanvasElement) {
 		let instance = this
 		instance.canvas = canvas;
-		instance.canvas.addEventListener("mousedown", instance, false)
+		let mc = new Hammer(canvas);
+		mc.get('pan').set({ direction: Hammer.DIRECTION_ALL })
+		mc.on("pinchend tap panend", function (e) { instance.hammerevents(e, instance) })
+
 		instance.canvas.addEventListener("mousewheel", instance, false)
 		instance.canvas.addEventListener("DOMMouseScroll", instance, false)
-		instance.canvas.addEventListener("mouseup", instance, false)
+	}
+
+	hammerevents = function (e: HammerInput, instance: FractalBuilder) {
+		console.log(`type: ${e.type}, point: ${e.center.x} ${e.center.y}, delta: ${e.deltaX} ${e.deltaY}`)
+		let center = Utils.getcoordsfrompoint(e.center, instance.canvas, instance.pixelratio, instance.center)
+		switch (e.type) {
+			case 'tap': instance.onclick(center); break;
+			case 'pinchend': e.scale > 1 ? instance.zoomin(center) : instance.zoomout(); break;
+			case 'panend': instance.drag(new Point(-e.deltaX * instance.pixelratio, -e.deltaY * instance.pixelratio)); break;
+		}
 	}
 
 	handleEvent = function (e: Event) {
 		let mevent = <MouseEvent>e
 		let wevent = <WheelEvent>e
 		let instance = <FractalBuilder>this
+		let coords = Utils.getcoords(mevent, instance.canvas, instance.pixelratio, instance.center)
 
 		if (instance.ready) {
 			switch (e.type) {
-				case 'mousedown':
-					instance.dragcoords = Utils.getclickposition(instance.canvas, mevent)
-					break
-				case 'mouseup':
-					let upcoords = Utils.getclickposition(instance.canvas, mevent)
-					let change = { x: instance.dragcoords.x - upcoords.x, y: instance.dragcoords.y - upcoords.y }
-					if (Math.abs(change.x) > 3 || Math.abs(change.y)) {
-						instance.drag(change)
-					} else {
-						instance.onclick(mevent)
-					}
-					break
 				case 'mousewheel':
-					if (wevent.deltaY > 0) {
-						instance.zoomout()
-					} else {
-						let coords = Utils.getcoords(mevent, instance.canvas, instance.pixelratio, instance.center)
-						instance.zoomin(coords)
-					}
+					if (wevent.deltaY > 0) instance.zoomout()
+					else instance.zoomin(coords)
 					wevent.preventDefault()
 					break
 				case 'DOMMouseScroll':
-					if (wevent.detail > 0) {
-						instance.zoomout()
-					} else {
-						let coords = Utils.getcoords(mevent, instance.canvas, instance.pixelratio, instance.center)
-						instance.zoomin(coords)
-					}
+					if (wevent.detail > 0) instance.zoomout()
+					else instance.zoomin(coords)
 					wevent.preventDefault()
 					break
 			}
@@ -103,7 +96,7 @@ export class FractalBuilder {
 	}
 
 	public zoomin(coords: Point) {
-		if(coords != null) {
+		if (coords != null) {
 			this.center = coords;
 		}
 		this.pixelratio *= 0.5;
@@ -120,8 +113,8 @@ export class FractalBuilder {
 	}
 
 	protected drag(change: Point) {
-		this.center.x += change.x * this.pixelratio
-		this.center.y -= change.y * this.pixelratio
+		this.center.x += change.x
+		this.center.y -= change.y
 		this.redraw(true)
 		this.ondrag()
 	}
@@ -152,16 +145,8 @@ export class FractalBuilder {
 		if (this.dataparts.length == this.threadsnumber) {
 			this.data = _.chain(this.dataparts).sortBy("threadid").map(n => n.data).value()
 			this.repaint()
-			this.dataparts = new Array<ResponseData>();
+			this.dataparts = new Array<ResponseData>()
 			this.ready = true
-			if (typeof (console) != 'undefined') {
-				console.log(`
-					Type: ${(this.type)}
-					Subsampling: ${this.supersampling} 
-					threadsnumber: ${this.threadsnumber}
-					Time: ${((new Date()).getTime() - this.timer)}`
-				)
-			}
 		}
 	}
 

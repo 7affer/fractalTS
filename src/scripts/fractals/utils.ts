@@ -31,3 +31,15 @@ export function getcoords(
         (canvas.height / 2 - pos.y) * pxratio + base.y
     );
 }
+
+export function getcoordsfrompoint(
+    center: Point,
+    canvas: HTMLCanvasElement,
+    pxratio: number,
+    base: Point
+) {
+    return new Point(
+        (center.x - canvas.width / 2) * pxratio + base.x,
+        (canvas.height / 2 - center.y) * pxratio + base.y
+    );
+}

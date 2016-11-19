@@ -86,9 +86,8 @@ function initfractals(gradient: Array<GradData>) {
 	julia.ondrag = () => { tutorial.setlevel(4) }
 }
 
-function mouseclick(e: MouseEvent) {
-	var juliapoint = Utils.getcoords(e, canvasm, mandelbrot.pixelratio, mandelbrot.center)
-	julia.jconstant = juliapoint
+function mouseclick(e: Point) {
+	julia.jconstant = e
 	julia.center = new Point(0,0)
 	julia.pixelratio = initialpixelratio
 	julia.redraw()

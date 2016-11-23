@@ -84,15 +84,14 @@ export class FractalBuilder {
 			switch (e.type) {
 				case 'mousewheel':
 					if (wevent.deltaY > 0) instance.zoomout()
-					else instance.zoomin(coords)
-					wevent.preventDefault()
+					else instance.zoomin(coords)					
 					break
 				case 'DOMMouseScroll':
 					if (wevent.detail > 0) instance.zoomout()
 					else instance.zoomin(coords)
-					wevent.preventDefault()
 					break
 			}
+			wevent.preventDefault()
 		}
 	}
 
